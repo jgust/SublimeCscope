@@ -1,0 +1,12 @@
+[
+    // { "keys": ["alt+1"], "command": "sc_find_definition" },
+    // { "keys": ["super+alt+1"], "command": "sc_find_definition", "args": {"results_to_buffer": true} },
+    // { "keys": ["alt+2"], "command": "sc_find_symbol" },
+    // { "keys": ["super+alt+2"], "command": "sc_find_symbol", "args": {"results_to_buffer": true} },
+    // { "keys": ["alt+3"], "command": "sc_find_callers" },
+    // { "keys": ["super+alt+3"], "command": "sc_find_callers", "args": {"results_to_buffer": true} },
+    // { "keys": ["alt+4"], "command": "sc_find_callees" },
+    // { "keys": ["super+alt+4"], "command": "sc_find_callees", "args": {"results_to_buffer": true} },
+    // { "keys": ["alt+5"], "command": "sc_find_files_including" },
+    // { "keys": ["super+alt+5"], "command": "sc_find_files_including", "args": {"results_to_buffer": true} }
+]

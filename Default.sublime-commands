@@ -1,0 +1,80 @@
+[
+  {
+    "caption": "SublimeCscope: Find Symbol",
+    "command": "sc_find_symbol"
+  },
+  {
+    "caption": "SublimeCscope: Find Symbol (Use Buffer)",
+    "command": "sc_find_symbol",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find Definition",
+    "command": "sc_find_definition"
+  },
+  {
+    "caption": "SublimeCscope: Find Definition (Use Buffer)",
+    "command": "sc_find_definition",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find Functions Called By This Function",
+    "command": "sc_find_callees"
+  },
+  {
+    "caption": "SublimeCscope: Find Functions Called By This Function (Use Buffer)",
+    "command": "sc_find_callees",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find Functions Calling This Function",
+    "command": "sc_find_callers"
+  },
+  {
+    "caption": "SublimeCscope: Find Functions Calling This Function (Use Buffer)",
+    "command": "sc_find_callers",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find String",
+    "command": "sc_find_string"
+  },{
+    "caption": "SublimeCscope: Find String (Use Buffer)",
+    "command": "sc_find_string",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find Pattern",
+    "command": "sc_find_egrep_pattern"
+  },{
+    "caption": "SublimeCscope: Find Pattern (Use Buffer)",
+    "command": "sc_find_egrep_pattern",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Find Files Including This File",
+    "command": "sc_find_files_including"
+  },{
+    "caption": "SublimeCscope: Find Files Including This File (Use Buffer)",
+    "command": "sc_find_files_including",
+    "args": {"results_to_buffer": true}
+  },
+  {
+    "caption": "SublimeCscope: Refresh All Projects",
+    "command": "sc_refresh_all"
+  },
+  {
+    "caption": "Preferences: SublimeCscope Settings – Default",
+    "command": "open_file",
+    "args": {"file": "${packages}/SublimeCscope/SublimeCscope.sublime-settings"}
+  },
+  {
+    "caption": "Preferences: SublimeCscope Settings – User",
+    "command": "open_file",
+    "args": {"file": "${packages}/User/SublimeCscope.sublime-settings"}
+  },
+  {
+    "caption": "SublimeCscope: Run Unit Tests (Debug)",
+    "command": "sc_tests"
+  }
+]

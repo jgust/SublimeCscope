@@ -1,0 +1,44 @@
+{
+    // All of these settings can be overwritten on a per-project basis
+    // by modifying the project settings. (Note: in that case you need to prefix
+    // the keys below with "sublimecscope_"
+    // i.e. "sublimecscope_index_filepatterns": ["*.c"])
+    //
+    // Specify which file types should be included in the cscope index.
+    // cscope officially supports .c, .h, .l (lex) and .y (yacc)
+    // but is known to do a good job of finding symbols in many other languages
+    // that have a C-based syntax (e.g. Java, Ruby, Python)
+    // "index_file_extensions": [
+    //                           ".c",
+    //                           ".cc",
+    //                           ".cpp",
+    //                           ".h",
+    //                           ".hpp",
+    //                           ".l",
+    //                           ".y",
+    //                           ".py",
+    //                           ".rb",
+    //                           ".java"
+    //                          ],
+
+    // The path to the cscope executable. If empty, PATH environment will be searched.
+    // "cscope_path": "",
+
+    // Set this to true if you want cscope to search the standard include folders
+    // (e.g. /usr/include) for include files while building the index. When set to
+    // false it will only use include files that are included in the project.
+    // "search_std_include_folders": false,
+
+    // a list of include folders (outside of project) that cscope should
+    // look into for #include files. This will correspond to one or more
+    // '-I' options being passed to cscope
+    // "extra_include_folders": = []
+
+    // Specify a folder where cscope should store its temporary data.
+    // The 'TMPDIR' environment variable will be set to this value
+    // "tmp_folder": ""
+
+    // If cscope returns more results than this limit. Abort the search.
+    // For unlimited results, set this to -1
+    // "maximum_results": 1000
+}
