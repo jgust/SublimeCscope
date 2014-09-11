@@ -321,14 +321,14 @@ class Indexer(ActorBase):
                     self._perform_crawl()
                     return
                 else:
-                    print("Threshold exceeded, switching to two tier mode")
+                    if DEBUG: print("Threshold exceeded, switching to two tier mode")
                     self._reset_results()
                     self._two_tier_mode = True
 
         elif not partial_update and self._two_tier_mode:
-                print("%s: Project: %s. Project size is below threshold. "
-                      "Reverting back to one tier mode" %
-                      (PACKAGE_NAME, os.path.dirname(self._config.db_location)))
+                if DEBUG: print("%s: Project: %s. Project size is below threshold. "
+                                "Reverting back to one tier mode" %
+                               (PACKAGE_NAME, os.path.dirname(self._config.db_location)))
                 self._reset_results()
 
         file_index = {}
