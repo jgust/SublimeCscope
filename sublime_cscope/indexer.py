@@ -797,7 +797,7 @@ def _get_proj_name(view_or_window):
         if not proj_name:
             proj_name = os.path.join(sublime.cache_path(),
                                      PACKAGE_NAME,
-                                     'tmp_index_' + win.id(),
+                                     'tmp_index_' + str(win.id()),
                                      'dummy_project.txt')
     return proj_name
 
