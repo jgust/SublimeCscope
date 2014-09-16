@@ -77,7 +77,12 @@ class CscopeResultsToQuickPanel:
 
         def on_done_cb(index):
             if index < 0 or index > (len(results) - 1):
+                if highlighted_view: # cancel
+                    print("Cancel QP")
+                    highlighted_view.run_command('jump_back')
+
                 return
+
             file_name = results[index][0]
             tmp_view = win.find_open_file(file_name)
 

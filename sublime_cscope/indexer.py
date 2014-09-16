@@ -34,6 +34,7 @@ from . import cscope_runner
 DEBUG_DECORATORS = False
 DEBUG_INDEXERCONFIG = False
 
+
 DB_FOLDER_POSTFIX = '-' + PACKAGE_NAME.lower()
 
 TWO_TIER_THRESHOLD = 50
@@ -42,6 +43,7 @@ TWO_TIER_THRESHOLD = 50
 # There should be one per project or workspace
 _indexers = {}
 _indexers_by_win = {}
+
 
 class ActorQuit(Exception):
     pass
@@ -449,7 +451,9 @@ class Crawler(ActorBase):
                              os_stat, file_matcher,
                              folder_matcher, visited_files):
 
+        start_path = os.path.normpath(start_path)
         if DEBUG: print("Starting to crawl folder: %s" % start_path)
+
         prev = None
         prev_inode = 0
 
@@ -783,6 +787,11 @@ class IndexerConfig():
         return True
 
 
+# The folder where we store cscope indexes for workspaces (since they have no project
+# folder associated with them.)
+def _get_tmp_db_folder():
+    return os.path.join(sublime.cache_path(), PACKAGE_NAME, 'workspace_tmp')
+
 def _get_proj_name(view_or_window):
     proj_name = None
     win = view_or_window
@@ -795,10 +804,8 @@ def _get_proj_name(view_or_window):
         proj_name = win.project_file_name()
         # if the window doesn't have a proj_name, generate a dummy_one
         if not proj_name:
-            proj_name = os.path.join(sublime.cache_path(),
-                                     PACKAGE_NAME,
-                                     'tmp_index_' + str(win.id()),
-                                     'dummy_project.txt')
+            proj_name = os.path.join(_get_tmp_db_folder(), 'workspace_' + str(win.id()))
+
     return proj_name
 
 def _set_from_sorted_list(l):
@@ -876,6 +883,15 @@ def refresh(win=None, explicit_refresh=True):
     Refresh the file tree of the indexer belonging to window
     if win is None refresh all indexers.
     """
+    tmp_folder = _get_tmp_db_folder()
+    if os.path.isfile(tmp_folder):
+        print("%s: %s exists but is not a folder.  Removing" % (PACKAGE_NAME, tmp_folder))
+        os.remove(tmp_folder)
+
+    if not os.path.exists(tmp_folder):
+        print("%s: Creating tmp folder: %s." % (PACKAGE_NAME, tmp_folder))
+        os.mkdir(tmp_folder)
+
     windows = [win] if win else sublime.windows()
     indexer_win_pair = [(_get_proj_name(win), win) for win in windows
                         if _get_proj_name(win)]
