@@ -480,7 +480,11 @@ class Crawler(ActorBase):
                        os_stat, file_matcher, visited_files):
 
         for f in files:
-            st = os_stat(os.path.join(path, f))
+            try:
+                st = os_stat(os.path.join(path, f))
+            except FileNotFoundError as e:
+                print("%s: %s" % (PACKAGE_NAME, e))
+                continue
 
             if st.st_ino in visited_files:
                 if DEBUG: print("File %s was already visited" % os.path.join(path, f))
@@ -496,7 +500,11 @@ class Crawler(ActorBase):
                             folder_matcher, visited_folders):
         filtered_subdirs = []
         for d in subdirs:
-            st = os_stat(os.path.join(path, d))
+            try:
+                st = os_stat(os.path.join(path, d))
+            except FileNotFoundError as e:
+                print("%s: %s" % (PACKAGE_NAME, e))
+                continue
 
             if st.st_ino in visited_folders:
                 if DEBUG: print("File %s was already visited" % os.path.join(path, d))
