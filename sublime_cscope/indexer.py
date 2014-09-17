@@ -898,7 +898,7 @@ def refresh(win=None, explicit_refresh=True):
 
     if not os.path.exists(tmp_folder):
         print("%s: Creating tmp folder: %s." % (PACKAGE_NAME, tmp_folder))
-        os.mkdir(tmp_folder)
+        os.makedirs(tmp_folder, exists_ok=True)
 
     windows = [win] if win else sublime.windows()
     indexer_win_pair = [(_get_proj_name(win), win) for win in windows
