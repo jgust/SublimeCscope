@@ -1,0 +1,32 @@
+[
+    { "caption": "-", "id": "sublime-cscope-context-end"},
+    {
+        "caption": "SublimeCscope", "id": "sublime-cscope-context",
+        "children":
+            [
+                { "caption": "Find Symbol", "command": "sc_find_symbol" },
+                { "caption": "Find Symbol (Use Buffer)", "command": "sc_find_symbol", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find Definition", "command": "sc_find_definition" },
+                { "caption": "Find Definition (Use Buffer)", "command": "sc_find_definition", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find Callers", "command": "sc_find_callers" },
+                { "caption": "Find Callers (Use Buffer)", "command": "sc_find_callers", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find Callees", "command": "sc_find_callees" },
+                { "caption": "Find Callees (Use Buffer)", "command": "sc_find_callees", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find String", "command": "sc_find_string" },
+                { "caption": "Find String (Use Buffer)", "command": "sc_find_string", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find Pattern", "command": "sc_find_egrep_pattern"},
+                { "caption": "Find Pattern (Use Buffer)", "command": "sc_find_egrep_pattern", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Find Files Including This File", "command": "sc_find_files_including"},
+                { "caption": "Find Files Including This File (Use Buffer)", "command": "sc_find_files_including", "args": {"results_to_buffer": true} },
+                { "caption": "-"},
+                { "caption": "Refresh All Projects", "command": "sc_refresh_all" }
+            ]
+    },
+    { "caption": "-", "id": "sublime-cscope-context-end"}
+]
