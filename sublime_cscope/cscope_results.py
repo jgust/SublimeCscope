@@ -55,52 +55,72 @@ class CscopeResultsToBuffer:
                         {'action': action, 'search_term': search_term, 'results': results})
 
 
+class CscopeQuickPanelHandler:
+    def __init__(self, win, goto_word, results):
+        self.highlighted_view = None
+        self.win = win
+        self.results = results
+        self.goto_word = goto_word
+        self.initial_view = win.active_view()
+        self.initial_pos = self.initial_view.viewport_position()
+        self.initial_sel = self.initial_view.sel()[0]
+
+
+    def cancel(self):
+        if not self.initial_view:
+            return
+
+
+        if self.initial_view != self.win.active_view():
+            self.win.focus_view(self.initial_view)
+
+        active_view = self.win.active_view()
+        vp = active_view.viewport_position()
+        sel = active_view.sel()
+
+        if self.initial_pos != vp:
+            active_view.set_viewport_position(self.initial_pos, True)
+
+        if self.initial_sel != sel[0]:
+            sel.clear()
+            sel.add(self.initial_sel)
+
+
+
+    def on_highlighted_cb(self, index):
+        if index < 0 or index > (len(self.results) - 1):
+                return
+
+        file_name = (self.results[index][0] + ":{:d}").format(self.results[index][1])
+        self.highlighted_view = self.win.open_file(file_name,
+                             sublime.ENCODED_POSITION | sublime.TRANSIENT)
+
+    def on_done_cb(self, index):
+        if index < 0 or index > (len(self.results) - 1):
+            self.cancel()
+            return
+
+        file_name = self.results[index][0]
+        view = self.win.open_file((file_name + ":{:d}").format(self.results[index][1]),
+                                     sublime.ENCODED_POSITION | sublime.TRANSIENT)
+
+        curr_pos = view.text_point(self.results[index][1] - 1, 0)
+        # If the goto word is empty we should use the context field from cscope
+        new_pos = view.find(self.goto_word or self.results[index][2], curr_pos).a
+        if new_pos > curr_pos:
+            sel = view.sel()
+            sel.clear()
+            sel.add(new_pos)
+
 
 class CscopeResultsToQuickPanel:
 
     @staticmethod
     def generate_results(action, search_term, results, win=None):
         qp_results = []
-        highlighted_view = None
 
         if not win:
             win = sublime.active_window()
-
-        def on_highlighted_cb(index):
-            if index < 0 or index > (len(results) - 1):
-                return
-
-            file_name = (results[index][0] + ":{:d}").format(results[index][1])
-            highlighted_view = win.open_file(file_name,
-                                             sublime.ENCODED_POSITION | sublime.TRANSIENT)
-
-
-        def on_done_cb(index):
-            if index < 0 or index > (len(results) - 1):
-                if highlighted_view: # cancel
-                    print("Cancel QP")
-                    highlighted_view.run_command('jump_back')
-
-                return
-
-            file_name = results[index][0]
-            tmp_view = win.find_open_file(file_name)
-
-            if tmp_view != highlighted_view:
-                tmp_view = win.open_file((file_name + ":{:d}").format(results[index][1]),
-                                         sublime.ENCODED_POSITION | sublime.TRANSIENT)
-
-            if action == 'find_callees':
-                goto_word = results[index][2]
-            else:
-                goto_word = search_term
-
-            curr_pos = tmp_view.text_point(results[index][1] - 1, 0)
-            new_pos = tmp_view.find(goto_word, curr_pos).a
-            if new_pos > curr_pos:
-                sel = tmp_view.sel()
-                sel.clear()
-                sel.add(new_pos)
 
         folders = win.folders()
         folders = [folder.rstrip(os.path.sep) for folder in folders]
@@ -120,9 +140,17 @@ class CscopeResultsToQuickPanel:
                     tmp_fn = fn[len(folder + os.path.sep):]
             qp_results.append(['{}:{:d}'.format(tmp_fn, ln),'{}: {}'.format(func, txt)])
 
-        if qp_results:
-            win.show_quick_panel(qp_results, on_done_cb,
-                                 0, 0, on_highlighted_cb)
+        if not qp_results:
+            return
+
+        goto_word = search_term if action != 'find_callees' else None
+        handler = CscopeQuickPanelHandler(win, goto_word, results)
+
+        if len(qp_results) == 1:
+            handler.on_done_cb(0)
+        else:
+            win.show_quick_panel(qp_results, handler.on_done_cb,
+                                 0, 0, handler.on_highlighted_cb)
 
 
 class CscopeResult:
