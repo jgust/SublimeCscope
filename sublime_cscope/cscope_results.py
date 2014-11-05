@@ -102,7 +102,7 @@ class CscopeQuickPanelHandler:
 
         file_name = self.results[index][0]
         view = self.win.open_file((file_name + ":{:d}").format(self.results[index][1]),
-                                     sublime.ENCODED_POSITION | sublime.TRANSIENT)
+                                     sublime.ENCODED_POSITION)
 
         curr_pos = view.text_point(self.results[index][1] - 1, 0)
         # If the goto word is empty we should use the context field from cscope
