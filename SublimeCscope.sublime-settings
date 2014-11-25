@@ -2,7 +2,7 @@
     // All of these settings can be overwritten on a per-project basis
     // by modifying the project settings. (Note: in that case you need to prefix
     // the keys below with "sublimecscope_"
-    // i.e. "sublimecscope_index_filepatterns": ["*.c"])
+    // i.e. "sublimecscope_index_extensions": ["*.c"])
     //
     // Specify which file types should be included in the cscope index.
     // cscope officially supports .c, .h, .l (lex) and .y (yacc)

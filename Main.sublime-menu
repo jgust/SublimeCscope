@@ -5,6 +5,7 @@
         [
             {
                 "id": "packages",
+                "caption": "Packages",
                 "children":
                 [
                     {
@@ -23,6 +24,7 @@
         [
             {
                 "id": "package-settings",
+                "caption": "Package Settings",
                 "children":
                 [
                     {
