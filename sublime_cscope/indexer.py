@@ -201,6 +201,7 @@ class Indexer(ActorBase):
         self._promotion_set = set()
         self._demotion_set = set()
         self._config = None
+        self._force_rebuild_db = False
 
     def start(self):
         super().start()
@@ -252,7 +253,9 @@ class Indexer(ActorBase):
                 if full_update:
                     self._write_file_list(files, secondary_list)
                     cscope_runner.generate_index(self._config.db_location,
-                                                 _find_window_from_indexer(self))
+                                                 _find_window_from_indexer(self),
+                                                 force_rebuild=self._force_rebuild_db)
+                    self._force_rebuild_db = False
             else:
                 self._write_file_list(files, primary_list)
                 if os.path.exists(secondary_list):
@@ -362,10 +365,11 @@ class Indexer(ActorBase):
 
         # Perfrom any pending partial crawls
         if self._partial_crawl_queue:
-            self._perform_crawl(True, send_always=True)
+            self._perform_crawl(partial_crawl=True, send_always=True)
 
     @send_msg
     def refresh(self):
+        self._force_rebuild_db = True
         self._perform_crawl()
 
     @send_msg

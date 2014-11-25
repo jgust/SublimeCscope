@@ -218,7 +218,7 @@ class CscopeQueryCommand:
 
 
 
-def generate_index(cwd, win):
-    build_db_command = CscopeBuildDbCommand(cwd, win=win)
+def generate_index(cwd, win, force_rebuild=False):
+    build_db_command = CscopeBuildDbCommand(cwd, win=win, force_rebuild=force_rebuild)
     build_db_command.run()
     return build_db_command.results
