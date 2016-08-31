@@ -420,7 +420,7 @@ class Indexer(ActorBase):
 
         if DEBUG: print("Demoting: %s" % file_path)
         self._demotion_set.add(file_path)
-        self._partial_crawl_queue.append(dirname(file_path))
+        self._partial_crawl_queue.append(os.path.dirname(file_path))
         self._perform_crawl(True, send_always=True)
 
 
@@ -486,7 +486,7 @@ class Crawler(ActorBase):
         for f in files:
             try:
                 st = os_stat(os.path.join(path, f))
-            except FileNotFoundError as e:
+            except (FileNotFoundError, OSError) as e:
                 print("%s: %s" % (PACKAGE_NAME, e))
                 continue
 
@@ -506,7 +506,7 @@ class Crawler(ActorBase):
         for d in subdirs:
             try:
                 st = os_stat(os.path.join(path, d))
-            except FileNotFoundError as e:
+            except (FileNotFoundError, OSError) as e:
                 print("%s: %s" % (PACKAGE_NAME, e))
                 continue
 
